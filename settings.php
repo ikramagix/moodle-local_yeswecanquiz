@@ -8,13 +8,12 @@ if ($hassiteconfig) {
 
     // User selection dropdown for Public User ID (only manual accounts)
     $useroptions = [];
-    $users = $DB->get_records_sql(
-        "SELECT u.id, u.firstname, u.lastname FROM {user} u 
-         JOIN {auth} a ON u.auth = 'manual' 
-         WHERE u.deleted = 0 
-         ORDER BY u.lastname, u.firstname"
-    );
-    
+    $users = $DB->get_records_sql("
+        SELECT u.id, u.firstname, u.lastname 
+        FROM {user} u
+        WHERE u.auth = 'manual' AND u.deleted = 0
+        ORDER BY u.lastname, u.firstname
+    ");
     foreach ($users as $user) {
         $useroptions[$user->id] = fullname($user);
     }
