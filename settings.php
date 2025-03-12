@@ -4,7 +4,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
-    $settings = new admin_settingpage('yesyoucanquiz', get_string('pluginname', 'yesyoucanquiz'));
+    $settings = new admin_settingpage('local_yesyoucanquiz', get_string('pluginname', 'local_yesyoucanquiz'));
 
     // User selection dropdown for Public User ID (only manual accounts)
     $useroptions = [];
