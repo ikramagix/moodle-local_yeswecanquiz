@@ -1,15 +1,38 @@
 <?php
-defined('MOODLE_INTERNAL') || die();
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Controls the session and forces new quiz attempts for the public user.
- *
+ * Core logic for the Yes You Can Quiz plugin.
+ * 
+ * @package   yesyoucanquiz
+ * @author    Ikrame Saadi (@ikramagix)
+ * @copyright 2025 Ikrame Saadi (@ikramagix) {@link http://ikramagix.com}
+ * @license   hhttps://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ * 
+ * 
+ * The following logic is used to control the session and force new quiz attempts for the public user:
  * - On any /mod/quiz/ page, if the user is not logged in (or is a guest), log them in as the public user.
  * - On the quiz view page (view.php), if the user is the public user,
  *   update any unfinished attempt for that quiz to state "finished"
  *   (thus disabling the option to resume) and then redirect to the attempt page.
  * - Outside /mod/quiz/ pages, if the public user is logged in, log them out.
  */
+
+defined('MOODLE_INTERNAL') || die();
+
 function yesyoucanquiz_session_control() {
     global $USER, $DB, $SCRIPT;
 
