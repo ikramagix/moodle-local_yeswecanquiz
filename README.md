@@ -25,8 +25,13 @@ YesYouCanQuiz is a Moodle local plugin that enables **unauthenticated visitors**
 1. **Configure the Plugin**: Navigate to `Site Administration → Plugins → Local Plugins → YesYouCanQuiz`.
 2. **Select the Public User**:
    - A dropdown list will display your manual accounts. Select the one you wish to use as the "public" user.
-   > **Warning**: Do **not** select the default guest account. Moodle does not detect the default guest account >for quiz attempt bypass, so it will not work.
-   > **Tip**: Create a dedicated role (e.g., "Quiz Only") that grants only the permissions to view and attempt >quizzes, and assign that role to your "public" user.
+
+> [!WARNING]
+> Do **not** select the default guest account. Moodle does not detect the default guest account >for quiz attempt bypass, so it will not work.
+
+> [!TIP]
+> Create a dedicated role (e.g., "Quiz Only") that grants only the permissions to view and attempt >quizzes, and assign that role to your "public" user.
+
 3. **Save Changes and Test**: Save your settings and test the plugin by accessing a quiz as an unauthenticated user. Every attempt will be recorded under the public user account.
 
 ## Configuration & Recommendations
@@ -37,7 +42,8 @@ YesYouCanQuiz is a Moodle local plugin that enables **unauthenticated visitors**
 
 ## Disclaimer
 
-> **Important**: It is strongly advised to create a dedicated role with only the necessary capabilities to view and attempt quizzes and assign that role to the public user account. The default guest account is not supported by this plugin, and configuring the public user with excessive privileges may compromise your site's security. The author and contributors of YesYouCanQuiz assume no liability for any issues arising from incorrect role configuration or misconfiguration of the public user account.
+> [!CAUTION]
+> **It is strongly advised to create a dedicated role with only the necessary capabilities to view and attempt quizzes and assign that role to the public user account**. The default guest account is not supported by this plugin, and configuring the public user with excessive privileges may compromise your site's security. The author and contributors of YesYouCanQuiz assume no liability for any issues arising from incorrect role configuration or misconfiguration of the public user account.
 
 ## Version & Author
 
