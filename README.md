@@ -29,18 +29,16 @@ YesYouCanQuiz is a Moodle local plugin that enables **unauthenticated visitors**
 > [!WARNING]
 > Do **not** select the default guest account. Moodle does not detect the default guest account >for quiz attempt bypass, so it will not work.
 
+3. **Save Changes and Test**: Save your settings and test the plugin by accessing a quiz as an unauthenticated user. Every attempt will be recorded under the public user account.
+
 > [!TIP]
 > Create a dedicated role (e.g., "Quiz Only") that grants only the permissions to view and attempt >quizzes, and assign that role to your "public" user.
-
-3. **Save Changes and Test**: Save your settings and test the plugin by accessing a quiz as an unauthenticated user. Every attempt will be recorded under the public user account.
 
 ## Configuration & Recommendations
 
 - **Dedicated Role for Public User**: It is essential to create a custom role with a minimal set of capabilities—only those necessary for viewing and attempting quizzes. Avoid granting additional privileges such as dashboard access, profile editing, or self-enrollment. This approach secures your site and ensures that only quiz-related functionalities are accessible to visitors.
 - **Tracking Attempts**: All quiz attempts made by visitors will be registered under the public user account. While this allows you to track quiz activity, data will be consolidated under that single account.
 - **Security Notice**: Misconfiguring the public user (by assigning it a role with excessive privileges) may expose sensitive site functions. Please configure the public user's role with extreme caution.
-
-## Disclaimer
 
 > [!CAUTION]
 > **It is strongly advised to create a dedicated role with only the necessary capabilities to view and attempt quizzes and assign that role to the public user account**. The default guest account is not supported by this plugin, and configuring the public user with excessive privileges may compromise your site's security. The author and contributors of YesYouCanQuiz assume no liability for any issues arising from incorrect role configuration or misconfiguration of the public user account.
@@ -52,4 +50,4 @@ YesYouCanQuiz is a Moodle local plugin that enables **unauthenticated visitors**
 
 ## Support
 
-For support, feedback, or further information, please contact the author at [hello@ikramagix.com](mailto:hello@ikramagix.com) or refer to the Moodle community forums.
+For support, feedback, or further information, please contact me (the author) at [hello@ikramagix.com](mailto:hello@ikramagix.com) or refer to the Moodle community forums.
