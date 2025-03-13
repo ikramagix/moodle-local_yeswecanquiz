@@ -5,7 +5,7 @@
 YesYouCanQuiz is a Moodle local plugin that enables **unauthenticated visitors** to take quizzes by automatically logging them in as a designated "public" user. 
 
 <a href="#installation">
-    <img src="pix/logo-animated.gif" alt="YesYouCanQuiz Animated Logo" width="75" height="75">
+    <img src="pix/logo-animated.gif" alt="YesYouCanQuiz Animated Logo" width="150" height="150">
 </a>
 
 By bypassing Moodle’s default guest restrictions on quiz attempts, this plugin allows you to:
