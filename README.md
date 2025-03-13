@@ -50,4 +50,4 @@ YesYouCanQuiz is a Moodle local plugin that enables **unauthenticated visitors**
 
 ## Support
 
-For support, feedback, or further information, please contact me (the author) at [hello@ikramagix.com](mailto:hello@ikramagix.com) or refer to the Moodle community forums.
+For support, feedback, or further information, please contact me at [hello@ikramagix.com](mailto:hello@ikramagix.com) or refer to the Moodle community forums.
