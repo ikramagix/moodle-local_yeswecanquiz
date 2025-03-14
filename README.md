@@ -1,6 +1,6 @@
-# YesYouCanQuiz — Allow Visitors & Guests to Take Quizzes
-
 <img src="pix/logo-animated.gif" alt="YesYouCanQuiz Animated Logo" width="150" height="150">
+
+# YesYouCanQuiz — Allow Visitors & Guests to Take Quizzes
 
 ## Overview
 
