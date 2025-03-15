@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * English language file for YesYouCanQuiz plugin.
+ * English language file for YesWeCanQuiz plugin.
  *
- * @package   yesyoucanquiz
+ * @package   yeswecanquiz
  * @author    Ikrame Saadi (@ikramagix)
  * @copyright 2025 Ikrame Saadi (@ikramagix) {@link http://ikramagix.com}
  * @license   hhttps://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
@@ -26,7 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname']         = 'YesYouCanQuiz';
+$string['pluginname']         = 'YesWeCanQuiz';
 $string['publicuserid']       = 'Public User ID';
 $string['publicuserid_desc']  = 'Select the user account that will be used for guest quiz attempts.';
-$string['settings']           = 'YesYouCanQuiz Settings';
+$string['settings']           = 'YesWeCanQuiz Settings';

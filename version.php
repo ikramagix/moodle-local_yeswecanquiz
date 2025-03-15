@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version file for YesYouCanQuiz plugin.
+ * Version file for YesWeCanQuiz plugin.
  * 
- * @package   yesyoucanquiz
+ * @package   yeswecanquiz
  * @author    Ikrame Saadi (@ikramagix)
  * @copyright 2025 Ikrame Saadi (@ikramagix) {@link http://ikramagix.com}
  * @license   hhttps://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'local_yesyoucanquiz'; // MUST start with 'local_' for Moodle to detect it
+$plugin->component = 'local_yeswecanquiz'; // MUST start with 'local_' for Moodle to detect it
 $plugin->type = 'local'; // Explicitly define as a local plugin
 $plugin->version = 2025031202;
 $plugin->requires = 2023111300;

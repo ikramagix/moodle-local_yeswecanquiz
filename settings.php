@@ -17,7 +17,7 @@
 /**
  * Settings file.
  *
- * @package   yesyoucanquiz
+ * @package   yeswecanquiz
  * @author    Ikrame Saadi (@ikramagix)
  * @copyright 2025 Ikrame Saadi (@ikramagix) {@link http://ikramagix.com}
  * @license   hhttps://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
-    $settings = new admin_settingpage('local_yesyoucanquiz', get_string('pluginname', 'local_yesyoucanquiz'));
+    $settings = new admin_settingpage('local_yeswecanquiz', get_string('pluginname', 'local_yeswecanquiz'));
 
     // Build user selection dropdown for Public User (only manual accounts).
     $useroptions = [];
@@ -40,9 +40,9 @@ if ($hassiteconfig) {
     }
 
     $settings->add(new admin_setting_configselect(
-        'local_yesyoucanquiz/publicuserid',
-        get_string('publicuserid', 'local_yesyoucanquiz'),
-        get_string('publicuserid_desc', 'local_yesyoucanquiz'),
+        'local_yeswecanquiz/publicuserid',
+        get_string('publicuserid', 'local_yeswecanquiz'),
+        get_string('publicuserid_desc', 'local_yeswecanquiz'),
         0, // Default: No user selected.
         $useroptions
     ));
