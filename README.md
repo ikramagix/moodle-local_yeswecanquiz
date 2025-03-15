@@ -7,7 +7,7 @@
 YesWeCanQuiz is a Moodle local plugin that enables **unauthenticated visitors** to take quizzes by automatically logging them in as a designated "public" user. By bypassing Moodle’s default guest restrictions on quiz attempts, this plugin allows you to:
 
 - **Initiate New Quiz Attempts**: Visitors can start a new quiz attempt each time they access a quiz.
-- **Centralized Tracking**: All quiz attempts are recorded under a single "public" user, facilitating monitoring and analysis of quiz activity.
+- **Centralize Tracking**: All quiz attempts are recorded under a single "public" user, facilitating monitoring and analysis of quiz activity outside of registered users.
 
 ## Features
 
@@ -43,13 +43,17 @@ YesWeCanQuiz is a Moodle local plugin that enables **unauthenticated visitors** 
 - **Security Notice**: Misconfiguring the public user (by assigning it a role with excessive privileges) may expose sensitive site functions. Please configure the public user's role with extreme caution.
 
 > [!CAUTION]
-> **It is strongly advised to create a dedicated role with only the necessary capabilities to view and attempt quizzes and assign that role to the public user account**. The default guest account is not supported by this plugin, and configuring the public user with excessive privileges may compromise your site's security. The author and contributors of YesWeCanQuiz assume no liability for any issues arising from incorrect role configuration or misconfiguration of the public user account.
+> **It is strongly advised to create a dedicated role with only the necessary capabilities to view and attempt quizzes and assign that role to the public user account**.
+> The default guest account is not supported by this plugin, and configuring the public user with excessive privileges may compromise your site's security.
+> The author and contributors of YesWeCanQuiz assume no liability for any issues arising from incorrect role configuration or misconfiguration of the public user account.
 
-## Version & Author
+## Support & Version/Author
+
+- **Support**:
+
+> [!NOTE]
+> For general support, please open a discussion the [Moodle community forums quiz section](https://moodle.org/forums/view.php?id=737): you'll find me there, so let's make solutions accessible to everyone. (tag me using @ followed by my username ikramagix)
+> If you need personalized support, feedback, or you have further inquiries, feel free to contact me at [hello@ikramagix.com](mailto:hello@ikramagix.com). We also provide assistance with setup or configuration and ongoing maintenance services.
 
 - **Version**: 1.1
 - **Author**: [@ikramagix](https://ikramagix.com)
-
-## Support
-
-For support, feedback, or further information, please contact me at [hello@ikramagix.com](mailto:hello@ikramagix.com) or refer to the Moodle community forums.
