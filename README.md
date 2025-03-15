@@ -52,8 +52,9 @@ YesWeCanQuiz is a Moodle local plugin that enables **unauthenticated visitors** 
 - **Support**:
 
 > [!NOTE]
-> For general support, please open a discussion the [Moodle community forums quiz section](https://moodle.org/forums/view.php?id=737): you'll find me there, so let's make solutions accessible to everyone. (tag me using @ followed by my username ikramagix)
-> If you need personalized support, feedback, or you have further inquiries, feel free to contact me at [hello@ikramagix.com](mailto:hello@ikramagix.com). We also provide assistance with setup or configuration and ongoing maintenance services.
+> For general support, start a discussion in the [Moodle Quiz forum](https://moodle.org/forums/view.php?id=737). I’m active there—let’s make solutions accessible to everyone! You can tag me using `@ikramagix` for direct assistance.
+> If you need personalized support, feedback, or have further inquiries, feel free to contact me at [hello@ikramagix.com](mailto:hello@ikramagix.com).  
+> Assistance with setup, configuration, and ongoing maintenance is also available upon request.
 
 - **Version**: 1.1
 - **Author**: [@ikramagix](https://ikramagix.com)
