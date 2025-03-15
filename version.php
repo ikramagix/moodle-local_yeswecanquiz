@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_yeswecanquiz'; // MUST start with 'local_' for Moodle to detect it
 $plugin->type = 'local'; // Explicitly define as a local plugin
-$plugin->version = 2025031202;
+$plugin->version = 2025031501;
 $plugin->requires = 2023111300;
 $plugin->maturity = MATURITY_STABLE;
 $plugin->release = '1.1';
