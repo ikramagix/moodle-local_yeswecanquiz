@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Settings file.
+ * Admin settings file.
  *
  * @package   yeswecanquiz
  * @author    Ikrame Saadi (@ikramagix)
