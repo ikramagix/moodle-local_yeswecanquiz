@@ -19,8 +19,9 @@
  * 
  * @package   yeswecanquiz
  * @author    Ikrame Saadi (@ikramagix)
- * @copyright 2025 Ikrame Saadi (@ikramagix) {@link http://ikramagix.com}
- * @license   hhttps://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ * @copyright 2025 Ikrame Saadi (@ikramagix) {@link https://yeswecanquiz.eu}
+ * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ * @contact   hello@yeswecanquiz.eu
  */
 
 defined('MOODLE_INTERNAL') || die();

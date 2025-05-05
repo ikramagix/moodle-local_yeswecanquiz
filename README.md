@@ -25,7 +25,7 @@ YesWeCanQuiz is a Moodle local plugin that enables **unauthenticated visitors** 
 ## Setup Instructions
 
 1. **Configure the Plugin**: Navigate to `Site Administration → Plugins → Local Plugins → YesWeCanQuiz`.
-2. **Select the Public User**:
+2. **Select the "public" user**:
    - A dropdown list will display your manual accounts. Select the one you wish to use as the "public" user.
 
 > [!WARNING]
@@ -53,8 +53,8 @@ YesWeCanQuiz is a Moodle local plugin that enables **unauthenticated visitors** 
 
 > [!NOTE]
 > For general support, start a discussion in the [Moodle Quiz forum](https://moodle.org/forums/). I’m active there—let’s make solutions accessible to everyone! You can tag me using `@ikramagix` for direct assistance.
-> If you need personalized support, feedback, or have further inquiries, feel free to contact me at [hello@ikramagix.com](mailto:hello@ikramagix.com).  
+> If you need personalized support, feedback, or have further inquiries, feel free to contact us at [hello@yeswecanquiz.eu](mailto:hello@yeswecanquiz.eu).  
 > Assistance with setup, configuration, and ongoing maintenance is also available upon request.
 
 - **Version**: 1.1
-- **Author**: [@ikramagix](https://ikramagix.com)
+- **Author**: [@ikramagix](https://ikramagix.com) — [yeswecanquiz.eu](https://yeswecanquiz.eu)

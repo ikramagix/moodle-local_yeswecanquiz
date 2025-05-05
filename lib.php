@@ -14,22 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Core logic for the Yes You Can Quiz plugin.
- * 
- * @package   yeswecanquiz
- * @author    Ikrame Saadi (@ikramagix)
- * @copyright 2025 Ikrame Saadi (@ikramagix) {@link http://ikramagix.com}
- * @license   hhttps://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
- * 
- * 
- * The following logic is used to control the session and force new quiz attempts for the public user:
- * - On any /mod/quiz/ page, if the user is not logged in (or is a guest), log them in as the public user.
- * - On the quiz view page (view.php), if the user is the public user,
- *   update any unfinished attempt for that quiz to state "finished"
- *   (thus disabling the option to resume) and then redirect to the attempt page.
- * - Outside /mod/quiz/ pages, if the public user is logged in, log them out.
- */
+ /**
+  * Core logic for the YesWeCanQuiz plugin.
+  * 
+  * @package   yeswecanquiz
+  * @author    Ikrame Saadi (@ikramagix)
+  * @copyright 2025 Ikrame Saadi (@ikramagix) {@link https://yeswecanquiz.eu}
+  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+  * @contact   hello@yeswecanquiz.eu
+  *
+  * The following logic is used to control the session and force new quiz attempts for the public user:
+  * - On any /mod/quiz/ page, if the user is not logged in (or is a guest), log them in as the public user.
+  * - On the quiz view page (view.php), if the user is the public user,
+  *   update any unfinished attempt for that quiz to state "finished"
+  *   (thus disabling the option to resume) and then redirect to the attempt page.
+  * - Outside /mod/quiz/ pages, if the public user is logged in, log them out.
+  */
+
 
 defined('MOODLE_INTERNAL') || die();
 
