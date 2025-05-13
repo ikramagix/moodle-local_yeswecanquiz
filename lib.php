@@ -34,7 +34,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-function yeswecanquiz_session_control() {
+function local_yeswecanquiz_session_control() {
     global $USER, $DB, $SCRIPT;
 
     // Get the public user ID from plugin settings.
@@ -44,8 +44,8 @@ function yeswecanquiz_session_control() {
     }
 
     // Avoid loops by using a session flag array.
-    if (!isset($_SESSION['yeswecanquiz_newattempt'])) {
-        $_SESSION['yeswecanquiz_newattempt'] = array();
+    if (!isset($_SESSION['local_yeswecanquiz_newattempt'])) {
+        $_SESSION['local_yeswecanquiz_newattempt'] = array();
     }
 
     // CASE 1: On quiz view page.
@@ -65,7 +65,7 @@ function yeswecanquiz_session_control() {
             if (isset($_GET['id'])) {
                 $cmid = required_param('id', PARAM_INT);
                 // Only process once per quiz view to avoid looping.
-                if (empty($_SESSION['yeswecanquiz_newattempt'][$cmid])) {
+                if (empty($_SESSION['local_yeswecanquiz_newattempt'][$cmid])) {
                     // Get course module and quiz records.
                     $cm = get_coursemodule_from_id('quiz', $cmid, 0, false, MUST_EXIST);
                     $quiz = $DB->get_record('quiz', array('id' => $cm->instance), '*', MUST_EXIST);
@@ -78,7 +78,7 @@ function yeswecanquiz_session_control() {
                         }
                     }
                     // Mark that we have processed this quiz.
-                    $_SESSION['yeswecanquiz_newattempt'][$cmid] = true;
+                    $_SESSION['local_yeswecanquiz_newattempt'][$cmid] = true;
                     // Redirect to the attempt page so Moodle creates a new attempt.
                     $attempturl = new moodle_url('/mod/quiz/attempt.php', array('attempt' => 0, 'id' => $cmid));
                     redirect($attempturl);
@@ -110,12 +110,12 @@ function yeswecanquiz_session_control() {
  * Hook callback: triggers session control early.
  */
 function local_yeswecanquiz_before_http_headers() {
-    yeswecanquiz_session_control();
+    local_yeswecanquiz_session_control();
 }
 
 /**
  * Fallback hook – triggered when Moodle builds the navigation.
  */
-function yeswecanquiz_extend_navigation(global_navigation $navigation) {
-    yeswecanquiz_session_control();
+function local_yeswecanquiz_extend_navigation(global_navigation $navigation) {
+    local_yeswecanquiz_session_control();
 }
