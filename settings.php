@@ -14,20 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Admin settings file.
- *
- * @package   yeswecanquiz
- * @author    Ikrame Saadi (@ikramagix)
- * @copyright 2025 Ikrame Saadi (@ikramagix) {@link https://yeswecanquiz.eu}
- * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
- * @contact   hello@yeswecanquiz.eu
- */
-
-
 defined('MOODLE_INTERNAL') || die();
 
-if ($hassiteconfig) {
+/**
+ * Plugin settings definition for the YesWeCanQuiz plugin.
+ *
+ * Adds a page under “Local plugins” where the admin selects
+ * the public user account for quiz attempts.
+ *
+ * @package    local_yeswecanquiz
+ * @copyright  2025 Ikrame Saadi
+ * @license    https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ */
+
+/**
+ * Define the YesWeCanQuiz admin settings page.
+ *
+ * - Creates an admin_settingpage under “Local plugins”
+ * - Adds a dropdown of all manual-account users for public‐quiz usage
+ *
+ * @global \moodle_database $DB    Moodle DB API.
+ * @global \admin_root      $ADMIN Admin settings tree.
+ * @return void
+ */
+
+if ($hassiteconfig)  {
     $settings = new admin_settingpage('local_yeswecanquiz', get_string('pluginname', 'local_yeswecanquiz'));
 
     // Build user selection dropdown for Public User (only manual accounts).

@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,25 +14,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
- /**
-  * Core logic for the YesWeCanQuiz plugin.
-  * 
-  * @package   yeswecanquiz
-  * @author    Ikrame Saadi (@ikramagix)
-  * @copyright 2025 Ikrame Saadi (@ikramagix) {@link https://yeswecanquiz.eu}
-  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
-  * @contact   hello@yeswecanquiz.eu
-  *
-  * The following logic is used to control the session and force new quiz attempts for the public user:
-  * - On any /mod/quiz/ page, if the user is not logged in (or is a guest), log them in as the public user.
-  * - On the quiz view page (view.php), if the user is the public user,
-  *   update any unfinished attempt for that quiz to state "finished"
-  *   (thus disabling the option to resume) and then redirect to the attempt page.
-  * - Outside /mod/quiz/ pages, if the public user is logged in, log them out.
-  */
-
-
 defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Core library for the YesWeCanQuiz plugin.
+ *
+ * Controls session behaviour and navigation alterations for the public user.
+ *
+ * @package    local_yeswecanquiz
+ * @copyright  2025 Ikrame Saadi (@ikramagix) <hello@yeswecanquiz.eu>
+ * @license    https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ */
+
+ /**
+ * Enforce quiz session rules for the public user.
+ *
+ * - On /mod/quiz/view.php, mark any unfinished attempt as finished and redirect.
+ * - Outside quiz pages, log out the public user.
+ *
+ * @global \stdClass         $USER   Current user object.
+ * @global \moodle_database  $DB     Moodle database API.
+ * @global string            $SCRIPT The current script path.
+ * @return void
+ */
 
 function local_yeswecanquiz_session_control() {
     global $USER, $DB, $SCRIPT;
@@ -107,15 +111,26 @@ function local_yeswecanquiz_session_control() {
 }
 
 /**
- * Hook callback: triggers session control early.
+ * Hook to run before HTTP headers are sent.
+ *
+ * Calls session control logic for public-user enforcement.
+ *
+ * @return void
  */
+
 function local_yeswecanquiz_before_http_headers() {
     local_yeswecanquiz_session_control();
 }
 
 /**
- * Fallback hook – triggered when Moodle builds the navigation.
+ * Extend the course navigation for the public user.
+ *
+ * Adjusts or hides navigation nodes to enforce the new-attempt policy.
+ *
+ * @param  \global_navigation  $navigation The navigation tree.
+ * @return void
  */
+
 function local_yeswecanquiz_extend_navigation(global_navigation $navigation) {
     local_yeswecanquiz_session_control();
 }

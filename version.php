@@ -14,17 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * Version file for YesWeCanQuiz plugin.
  * 
- * @package   yeswecanquiz
- * @author    Ikrame Saadi (@ikramagix)
- * @copyright 2025 Ikrame Saadi (@ikramagix) {@link https://yeswecanquiz.eu}
- * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
- * @contact   hello@yeswecanquiz.eu
+ * @package    local_yeswecanquiz
+ * @copyright  2025 Ikrame Saadi (@ikramagix) <hello@yeswecanquiz.eu>
+ * @license    https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_yeswecanquiz'; // MUST start with 'local_' for Moodle to detect it
 $plugin->type = 'local'; // Explicitly define as a local plugin
