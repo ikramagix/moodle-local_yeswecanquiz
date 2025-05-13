@@ -31,3 +31,4 @@ $string['pluginname']         = 'YesWeCanQuiz';
 $string['publicuserid']       = 'Public User ID';
 $string['publicuserid_desc']  = 'Select the user account that will be used for guest quiz attempts.';
 $string['settings']           = 'YesWeCanQuiz Settings';
+$string['privacy:metadata'] = 'The YesWeCanQuiz plugin does not store any personal user data.';
