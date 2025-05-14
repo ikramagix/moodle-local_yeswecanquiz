@@ -24,9 +24,17 @@ defined('MOODLE_INTERNAL') || die();
  * @license    https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
  */
 
+$string['pluginname']        = 'YesWeCanQuiz';
+$string['settings']          = 'YesWeCanQuiz Settings';
 
-$string['pluginname']         = 'YesWeCanQuiz';
-$string['publicuserid']       = 'Public User ID';
-$string['publicuserid_desc']  = 'Select the user account that will be used for guest quiz attempts.';
-$string['settings']           = 'YesWeCanQuiz Settings';
-$string['privacy:metadata'] = 'The YesWeCanQuiz plugin does not store any personal user data.';
+$string['publicuserid']      = 'Public quiz user ID';
+$string['publicuserid_desc'] = '
+Enter the <strong>numeric user ID</strong> of a manual-account user to serve as the public quiz user. 
+You can find this <strong>ID</strong> in the profile URL, for example:  
+<code>https://your_moodle_site.com/user/profile.php?id=12345</code>.  
+Using the exact ID ensures you select the correct user and avoids confusion with duplicate names or emails.
+';
+$string['publicuserid_invalid']   = 'No user found with that ID, please enter a valid numeric user ID.';
+$string['publicuserid_notmanual'] = 'The selected user must be a manually created account (auth = manual) to avoid hijack.';
+
+$string['privacy:metadata']  = 'The YesWeCanQuiz plugin does not store any personal user data.';
