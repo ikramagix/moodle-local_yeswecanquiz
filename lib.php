@@ -47,10 +47,9 @@ function local_yeswecanquiz_session_control() {
         return;
     }
 
-    // Avoid loops by using a session flag array.
-    if (!isset($_SESSION['local_yeswecanquiz_newattempt'])) {
-        $_SESSION['local_yeswecanquiz_newattempt'] = array();
-    }
+    // Use Moodle’s session-mode cache to avoid looping without using $_SESSION object.
+$cache = \cache::make('local_yeswecanquiz', 'session');
+
 
     // CASE 1: On quiz view page.
     if (strpos($SCRIPT, '/mod/quiz/view.php') !== false) {
@@ -65,26 +64,35 @@ function local_yeswecanquiz_session_control() {
             }
         }
         // Now, if we are the public user…
-        if (isloggedin() && !isguestuser() && $USER->id == $publicuserid) {
+        if (isloggedin() && !isguestuser() && $USER->id === $publicuserid) {
             if (isset($_GET['id'])) {
                 $cmid = required_param('id', PARAM_INT);
                 // Only process once per quiz view to avoid looping.
-                if (empty($_SESSION['local_yeswecanquiz_newattempt'][$cmid])) {
+                $cache = \cache::make('local_yeswecanquiz', 'session');
+                if (!$cache->has((string)$cmid)) {
                     // Get course module and quiz records.
-                    $cm = get_coursemodule_from_id('quiz', $cmid, 0, false, MUST_EXIST);
-                    $quiz = $DB->get_record('quiz', array('id' => $cm->instance), '*', MUST_EXIST);
-                    // Update any unfinished attempts (state not "finished") to "finished".
-                    if ($attempts = $DB->get_records_select('quiz_attempts',
-                            "quiz = ? AND userid = ? AND state <> ?",
-                            array($quiz->id, $publicuserid, 'finished'))) {
+                    $cm   = get_coursemodule_from_id('quiz', $cmid, 0, false, MUST_EXIST);
+                    $quiz = $DB->get_record('quiz', ['id' => $cm->instance], '*', MUST_EXIST);
+
+                    // Update any unfinished attempts (state <> "finished") to "finished".
+                    if ($attempts = $DB->get_records_select(
+                        'quiz_attempts',
+                        'quiz = ? AND userid = ? AND state <> ?',
+                        [$quiz->id, $publicuserid, 'finished']
+                    )) {
                         foreach ($attempts as $attempt) {
-                            $DB->set_field('quiz_attempts', 'state', 'finished', array('id' => $attempt->id));
+                            $DB->set_field('quiz_attempts', 'state', 'finished', ['id' => $attempt->id]);
                         }
                     }
-                    // Mark that we have processed this quiz.
-                    $_SESSION['local_yeswecanquiz_newattempt'][$cmid] = true;
+
+                    // Mark that we have processed this quiz for this session.
+                    $cache->set((string)$cmid, true);
+
                     // Redirect to the attempt page so Moodle creates a new attempt.
-                    $attempturl = new moodle_url('/mod/quiz/attempt.php', array('attempt' => 0, 'id' => $cmid));
+                    $attempturl = new moodle_url(
+                        '/mod/quiz/attempt.php',
+                        ['attempt' => 0, 'id' => $cmid]
+                    );
                     redirect($attempturl);
                 }
             }

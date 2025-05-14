@@ -21,21 +21,19 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2025 Ikrame Saadi (@ikramagix) <hello@yeswecanquiz.eu>
  * @license    https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
 /**
- * Hook registrations for YesWeCanQuiz.
+ * Cache definitions for YesWeCanQuiz.
  *
- * @package   local_yeswecanquiz
+ * @package    local_yeswecanquiz
  */
 
-return [
-    // Before HTTP headers are sent (new Hooks API in 4.4+).
-    \core\hook\output\before_http_headers::class => [
-        ['callback' => 'local_yeswecanquiz_before_http_headers'],
-    ],
-
-    // Primary navigation extension (4.5+ supports reordering/course nav etc).
-    \core\hook\navigation\primary_extend::class => [
-        ['callback' => 'local_yeswecanquiz_extend_navigation'],
+$definitions = [
+    // Per-PHP-session ad-hoc cache.
+    'session' => [
+        'mode'               => cache_store::MODE_SESSION,
+        'simplekeys'         => true,
+        'staticacceleration' => true,
     ],
 ];

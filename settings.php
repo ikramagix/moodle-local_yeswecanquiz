@@ -23,7 +23,7 @@ defined('MOODLE_INTERNAL') || die();
  * the public user account for quiz attempts.
  *
  * @package    local_yeswecanquiz
- * @copyright  2025 Ikrame Saadi
+ * @copyright  2025 Ikrame Saadi (@ikramagix) <hello@yeswecanquiz.eu>
  * @license    https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
  */
 
