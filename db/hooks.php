@@ -24,18 +24,13 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Hook registrations for YesWeCanQuiz.
+ * Only the before_http_headers hook is required to enforce session control.
+ * Moodle <4.4 ignores this file; Moodle ≥4.4 uses the PSR-14 Hooks API.
  *
  * @package   local_yeswecanquiz
  */
-
 return [
-    // Before HTTP headers are sent (new Hooks API in 4.4+).
     \core\hook\output\before_http_headers::class => [
         ['callback' => 'local_yeswecanquiz_before_http_headers'],
-    ],
-
-    // Primary navigation extension (4.5+ supports reordering/course nav etc).
-    \core\hook\navigation\primary_extend::class => [
-        ['callback' => 'local_yeswecanquiz_extend_navigation'],
     ],
 ];

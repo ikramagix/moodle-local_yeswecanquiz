@@ -118,27 +118,43 @@ $cache = \cache::make('local_yeswecanquiz', 'session');
     }
 }
 
-/**
- * Hook to run before HTTP headers are sent.
- *
- * Calls session control logic for public-user enforcement.
- *
- * @return void
+/*
+ * --------------------------------------------------------------------------
+ * 1) New PSR-14 Hooks API (Moodle 4.4+)
+ * --------------------------------------------------------------------------
  */
-
-function local_yeswecanquiz_before_http_headers() {
-    local_yeswecanquiz_session_control();
+if (class_exists(\core\hook\output\before_http_headers::class)) {
+    /**
+     * PSR-14 hook: before HTTP headers are sent.
+     *
+     * Must declare the hook object or PHP will 500, even if we don’t use it.
+     *
+     * @param before_http_headers $hook
+     * @return void
+     */
+    function local_yeswecanquiz_before_http_headers(before_http_headers $hook): void {
+        local_yeswecanquiz_session_control();
+    }
 }
 
-/**
- * Extend the course navigation for the public user.
+/*
+ * --------------------------------------------------------------------------
+ * 2) Legacy Callbacks API (pre-4.4)
+ * --------------------------------------------------------------------------
  *
- * Adjusts or hides navigation nodes to enforce the new-attempt policy.
- *
- * @param  \global_navigation  $navigation The navigation tree.
- * @return void
+ * Moodle <4.4 will look for a function named local_yeswecanquiz_before_http_headers()
+ * in your lib.php and call it automatically—no registration file needed.
+ * Note: this untyped signature MUST _not_ clash with the PSR-14 one above.
  */
-
-function local_yeswecanquiz_extend_navigation(global_navigation $navigation) {
-    local_yeswecanquiz_session_control();
+else {
+    /**
+     * Legacy callback: before HTTP headers are sent.
+     *
+     * Moodle <4.4 will auto-detect this function by name.
+     *
+     * @return void
+     */
+    function local_yeswecanquiz_before_http_headers(): void {
+        local_yeswecanquiz_session_control();
+    }
 }
