@@ -34,33 +34,38 @@ defined('MOODLE_INTERNAL') || die();
  *
  * @package   local_yeswecanquiz
  */
-class local_yeswecanquiz_admin_setting_publicuserid extends admin_setting_configtext {
 
-    /**
-     * Validate that the given value is an existing user ID with auth = 'manual'.
-     *
-     * @param string $data The submitted setting value.
-     * @return true|string True if valid, or an error message string.
-     */
-    public function validate($data) {
-        $error = parent::validate($data);
-        if ($error !== true) {
-            return $error;
+if (!class_exists('local_yeswecanquiz_admin_setting_publicuserid')) {
+    class local_yeswecanquiz_admin_setting_publicuserid extends admin_setting_configtext {
+
+        /**
+         * Validate that the given value is an existing user ID with auth = 'manual'.
+         *
+         * @param string $data The submitted setting value.
+         * @return true|string True if valid, or an error message string.
+         */
+        public function validate($data) {
+            $error = parent::validate($data);
+            if ($error !== true) {
+                return $error;
+            }
+            $userid = (int)$data;
+            global $DB;
+            if (!$DB->record_exists('user', ['id' => $userid])) {
+                return get_string('publicuserid_invalid', 'local_yeswecanquiz');
+            }
+            $user = $DB->get_record('user', ['id' => $userid], 'auth', MUST_EXIST);
+            if ($user->auth !== 'manual') {
+                return get_string('publicuserid_notmanual', 'local_yeswecanquiz');
+            }
+            return true;
         }
-        $userid = (int)$data;
-        global $DB;
-        if (!$DB->record_exists('user', ['id' => $userid])) {
-            return get_string('publicuserid_invalid', 'local_yeswecanquiz');
-        }
-        $user = $DB->get_record('user', ['id' => $userid], 'auth', MUST_EXIST);
-        if ($user->auth !== 'manual') {
-            return get_string('publicuserid_notmanual', 'local_yeswecanquiz');
-        }
-        return true;
     }
 }
 
 if ($hassiteconfig) {
+    global $ADMIN;
+
     /** 
      * Define the YesWeCanQuiz admin settings page.
      *
