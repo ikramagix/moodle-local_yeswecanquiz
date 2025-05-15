@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,27 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
- /**
-  * Core logic for the YesWeCanQuiz plugin.
-  * 
-  * @package   yeswecanquiz
-  * @author    Ikrame Saadi (@ikramagix)
-  * @copyright 2025 Ikrame Saadi (@ikramagix) {@link https://yeswecanquiz.eu}
-  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
-  * @contact   hello@yeswecanquiz.eu
-  *
-  * The following logic is used to control the session and force new quiz attempts for the public user:
-  * - On any /mod/quiz/ page, if the user is not logged in (or is a guest), log them in as the public user.
-  * - On the quiz view page (view.php), if the user is the public user,
-  *   update any unfinished attempt for that quiz to state "finished"
-  *   (thus disabling the option to resume) and then redirect to the attempt page.
-  * - Outside /mod/quiz/ pages, if the public user is logged in, log them out.
-  */
-
-
 defined('MOODLE_INTERNAL') || die();
 
-function yeswecanquiz_session_control() {
+/**
+ * Core library for the YesWeCanQuiz plugin.
+ *
+ * Controls session behaviour and navigation alterations for the public user.
+ *
+ * @package    local_yeswecanquiz
+ * @copyright  2025 Ikrame Saadi (@ikramagix) <hello@yeswecanquiz.eu>
+ * @license    https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ */
+
+ /**
+ * Enforce quiz session rules for the public user.
+ *
+ * - On /mod/quiz/view.php, mark any unfinished attempt as finished and redirect.
+ * - Outside quiz pages, log out the public user.
+ *
+ * @global \stdClass         $USER   Current user object.
+ * @global \moodle_database  $DB     Moodle database API.
+ * @global string            $SCRIPT The current script path.
+ * @return void
+ */
+
+function local_yeswecanquiz_session_control() {
     global $USER, $DB, $SCRIPT;
 
     // Get the public user ID from plugin settings.
@@ -43,10 +47,9 @@ function yeswecanquiz_session_control() {
         return;
     }
 
-    // Avoid loops by using a session flag array.
-    if (!isset($_SESSION['yeswecanquiz_newattempt'])) {
-        $_SESSION['yeswecanquiz_newattempt'] = array();
-    }
+    // Use Moodle’s session-mode cache to avoid looping without using $_SESSION object.
+$cache = \cache::make('local_yeswecanquiz', 'session');
+
 
     // CASE 1: On quiz view page.
     if (strpos($SCRIPT, '/mod/quiz/view.php') !== false) {
@@ -61,26 +64,35 @@ function yeswecanquiz_session_control() {
             }
         }
         // Now, if we are the public user…
-        if (isloggedin() && !isguestuser() && $USER->id == $publicuserid) {
+        if (isloggedin() && !isguestuser() && $USER->id === $publicuserid) {
             if (isset($_GET['id'])) {
                 $cmid = required_param('id', PARAM_INT);
                 // Only process once per quiz view to avoid looping.
-                if (empty($_SESSION['yeswecanquiz_newattempt'][$cmid])) {
+                $cache = \cache::make('local_yeswecanquiz', 'session');
+                if (!$cache->has((string)$cmid)) {
                     // Get course module and quiz records.
-                    $cm = get_coursemodule_from_id('quiz', $cmid, 0, false, MUST_EXIST);
-                    $quiz = $DB->get_record('quiz', array('id' => $cm->instance), '*', MUST_EXIST);
-                    // Update any unfinished attempts (state not "finished") to "finished".
-                    if ($attempts = $DB->get_records_select('quiz_attempts',
-                            "quiz = ? AND userid = ? AND state <> ?",
-                            array($quiz->id, $publicuserid, 'finished'))) {
+                    $cm   = get_coursemodule_from_id('quiz', $cmid, 0, false, MUST_EXIST);
+                    $quiz = $DB->get_record('quiz', ['id' => $cm->instance], '*', MUST_EXIST);
+
+                    // Update any unfinished attempts (state <> "finished") to "finished".
+                    if ($attempts = $DB->get_records_select(
+                        'quiz_attempts',
+                        'quiz = ? AND userid = ? AND state <> ?',
+                        [$quiz->id, $publicuserid, 'finished']
+                    )) {
                         foreach ($attempts as $attempt) {
-                            $DB->set_field('quiz_attempts', 'state', 'finished', array('id' => $attempt->id));
+                            $DB->set_field('quiz_attempts', 'state', 'finished', ['id' => $attempt->id]);
                         }
                     }
-                    // Mark that we have processed this quiz.
-                    $_SESSION['yeswecanquiz_newattempt'][$cmid] = true;
+
+                    // Mark that we have processed this quiz for this session.
+                    $cache->set((string)$cmid, true);
+
                     // Redirect to the attempt page so Moodle creates a new attempt.
-                    $attempturl = new moodle_url('/mod/quiz/attempt.php', array('attempt' => 0, 'id' => $cmid));
+                    $attempturl = new moodle_url(
+                        '/mod/quiz/attempt.php',
+                        ['attempt' => 0, 'id' => $cmid]
+                    );
                     redirect($attempturl);
                 }
             }
@@ -107,15 +119,26 @@ function yeswecanquiz_session_control() {
 }
 
 /**
- * Hook callback: triggers session control early.
+ * Hook to run before HTTP headers are sent.
+ *
+ * Calls session control logic for public-user enforcement.
+ *
+ * @return void
  */
+
 function local_yeswecanquiz_before_http_headers() {
-    yeswecanquiz_session_control();
+    local_yeswecanquiz_session_control();
 }
 
 /**
- * Fallback hook – triggered when Moodle builds the navigation.
+ * Extend the course navigation for the public user.
+ *
+ * Adjusts or hides navigation nodes to enforce the new-attempt policy.
+ *
+ * @param  \global_navigation  $navigation The navigation tree.
+ * @return void
  */
-function yeswecanquiz_extend_navigation(global_navigation $navigation) {
-    yeswecanquiz_session_control();
+
+function local_yeswecanquiz_extend_navigation(global_navigation $navigation) {
+    local_yeswecanquiz_session_control();
 }

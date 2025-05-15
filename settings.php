@@ -14,39 +14,79 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Admin settings file.
- *
- * @package   yeswecanquiz
- * @author    Ikrame Saadi (@ikramagix)
- * @copyright 2025 Ikrame Saadi (@ikramagix) {@link https://yeswecanquiz.eu}
- * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
- * @contact   hello@yeswecanquiz.eu
- */
-
-
 defined('MOODLE_INTERNAL') || die();
 
-if ($hassiteconfig) {
-    $settings = new admin_settingpage('local_yeswecanquiz', get_string('pluginname', 'local_yeswecanquiz'));
+/**
+ * Plugin settings definition for the YesWeCanQuiz plugin.
+ *
+ * Adds a page under "Local plugins" where the admin enters
+ * the user ID of the public quiz account.
+ *
+ * @package    local_yeswecanquiz
+ * @copyright  2025 Ikrame Saadi (@ikramagix) <hello@yeswecanquiz.eu>
+ * @license    https://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ */
 
-    // Build user selection dropdown for Public User (only manual accounts).
-    $useroptions = [];
-    $sql = "SELECT u.id, u.firstname, u.lastname, u.firstnamephonetic, u.lastnamephonetic, u.middlename, u.alternatename
-            FROM {user} u
-            WHERE u.auth = 'manual' AND u.deleted = 0
-            ORDER BY u.lastname, u.firstname";
-    $users = $DB->get_records_sql($sql);
-    foreach ($users as $user) {
-        $useroptions[$user->id] = fullname($user);
+/**
+ * A text setting that only accepts a valid manual-account user ID.
+ *
+ * Validates that the entered ID exists and belongs to a manual-account user.
+ *
+ * @package   local_yeswecanquiz
+ */
+
+if (!class_exists('local_yeswecanquiz_admin_setting_publicuserid')) {
+    class local_yeswecanquiz_admin_setting_publicuserid extends admin_setting_configtext {
+
+        /**
+         * Validate that the given value is an existing user ID with auth = 'manual'.
+         *
+         * @param string $data The submitted setting value.
+         * @return true|string True if valid, or an error message string.
+         */
+        public function validate($data) {
+            $error = parent::validate($data);
+            if ($error !== true) {
+                return $error;
+            }
+            $userid = (int)$data;
+            global $DB;
+            if (!$DB->record_exists('user', ['id' => $userid])) {
+                return get_string('publicuserid_invalid', 'local_yeswecanquiz');
+            }
+            $user = $DB->get_record('user', ['id' => $userid], 'auth', MUST_EXIST);
+            if ($user->auth !== 'manual') {
+                return get_string('publicuserid_notmanual', 'local_yeswecanquiz');
+            }
+            return true;
+        }
     }
+}
 
-    $settings->add(new admin_setting_configselect(
+if ($hassiteconfig) {
+    global $ADMIN;
+
+    /** 
+     * Define the YesWeCanQuiz admin settings page.
+     *
+     * - Creates an admin_settingpage under "Local plugins"
+     * - Adds a text input for the public quiz user ID
+     *
+     * @global \moodle_database $DB    Moodle DB API
+     * @global \admin_root      $ADMIN Admin settings tree
+     * @return void
+     */
+    $settings = new admin_settingpage(
+        'local_yeswecanquiz',
+        get_string('pluginname', 'local_yeswecanquiz')
+    );
+
+    // Public-quiz user: admin enters the manual-account user ID.
+    $settings->add(new local_yeswecanquiz_admin_setting_publicuserid(
         'local_yeswecanquiz/publicuserid',
         get_string('publicuserid', 'local_yeswecanquiz'),
         get_string('publicuserid_desc', 'local_yeswecanquiz'),
-        0, // Default: No user selected.
-        $useroptions
+        '' // default = empty
     ));
 
     $ADMIN->add('localplugins', $settings);
